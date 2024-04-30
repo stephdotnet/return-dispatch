@@ -80,6 +80,9 @@ export async function getWorkflowId(workflowFilename: string): Promise<number> {
       // wrong type definition
       const workflows: typeof response.data.workflows = response.data;
 
+      core.debug("List of workflows");
+      core.debug(workflows);
+
       workflowId = workflows.find((workflow) =>
         new RegExp(sanitisedFilename).test(workflow.path),
       )?.id;
@@ -142,6 +145,9 @@ export async function getWorkflowRunUrl(runId: number): Promise<string> {
 export async function getWorkflowRunIds(workflowId: number): Promise<number[]> {
   try {
     const branchName = getBranchName(config.ref);
+    core.debug("branchName");
+    core.debug(branchName);
+
 
     // https://docs.github.com/en/rest/reference/actions#list-workflow-runs
     const response = await octokit.rest.actions.listWorkflowRuns({
@@ -157,6 +163,10 @@ export async function getWorkflowRunIds(workflowId: number): Promise<number[]> {
             per_page: 10,
           }),
     });
+
+    core.debug("getWorkflowRunIds");
+    core.debug(response.data);
+
 
     if (response.status !== 200) {
       throw new Error(
