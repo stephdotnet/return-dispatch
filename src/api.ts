@@ -194,8 +194,7 @@ export async function getWorkflowRunJobSteps(runId: number): Promise<string[]> {
     const response = await octokit.rest.actions.listJobsForWorkflowRun({
       owner: config.owner,
       repo: config.repo,
-      run_id: runId,
-      filter: "latest",
+      run_id: runId
     });
 
     if (response.status !== 200) {

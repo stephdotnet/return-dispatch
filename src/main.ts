@@ -59,6 +59,9 @@ async function run(): Promise<void> {
           const steps = await api.getWorkflowRunJobSteps(id);
 
           for (const step of steps) {
+            console.log("Testing: " + idRegex);
+            console.log(steps);
+
             if (idRegex.test(step)) {
               const url = await api.getWorkflowRunUrl(id);
               core.info(
