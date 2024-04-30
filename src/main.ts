@@ -57,12 +57,12 @@ async function run(): Promise<void> {
       for (const id of workflowRunIds) {
         try {
           const steps = await api.getWorkflowRunJobSteps(id);
-
+          core.debug(steps);
           for (const step of steps) {
-            console.log("Testing: " + idRegex);
-            console.log(steps);
+
 
             if (idRegex.test(step)) {
+              core.debug("Testing: " + idRegex);
               const url = await api.getWorkflowRunUrl(id);
               core.info(
                 "Successfully identified remote Run:\n" +
