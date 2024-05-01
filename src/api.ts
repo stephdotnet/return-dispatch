@@ -144,7 +144,7 @@ export async function getWorkflowRunUrl(runId: number): Promise<string> {
 
 export async function getWorkflowRunIds(workflowId: number): Promise<number[]> {
   try {
-    const branchName = getBranchName(config.ref);
+    const branchName = getBranchName(config.ref) || config.ref;
     core.debug("branchName");
     core.debug(branchName || "no branch name found");
 
