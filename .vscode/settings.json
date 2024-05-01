@@ -3,5 +3,6 @@
         "Octokit",
         "camelcase",
         "jszip"
-    ]
+    ],
+    "files.eol": "\n",
 }

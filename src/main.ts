@@ -57,10 +57,8 @@ async function run(): Promise<void> {
       for (const id of workflowRunIds) {
         try {
           const steps = await api.getWorkflowRunJobSteps(id);
-          core.debug(steps);
+          core.debug(JSON.stringify(steps));
           for (const step of steps) {
-
-
             if (idRegex.test(step)) {
               core.debug("Testing: " + idRegex);
               const url = await api.getWorkflowRunUrl(id);

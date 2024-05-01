@@ -81,7 +81,7 @@ export async function getWorkflowId(workflowFilename: string): Promise<number> {
       const workflows: typeof response.data.workflows = response.data;
 
       core.debug("List of workflows");
-      core.debug(workflows);
+      core.debug(JSON.stringify(workflows, null, 2));
 
       workflowId = workflows.find((workflow) =>
         new RegExp(sanitisedFilename).test(workflow.path),
@@ -146,8 +146,7 @@ export async function getWorkflowRunIds(workflowId: number): Promise<number[]> {
   try {
     const branchName = getBranchName(config.ref);
     core.debug("branchName");
-    core.debug(branchName);
-
+    core.debug(branchName || "no branch name found");
 
     // https://docs.github.com/en/rest/reference/actions#list-workflow-runs
     const response = await octokit.rest.actions.listWorkflowRuns({
@@ -165,8 +164,7 @@ export async function getWorkflowRunIds(workflowId: number): Promise<number[]> {
     });
 
     core.debug("getWorkflowRunIds");
-    core.debug(response.data);
-
+    core.debug(JSON.stringify(response.data, null, 2));
 
     if (response.status !== 200) {
       throw new Error(
@@ -204,7 +202,7 @@ export async function getWorkflowRunJobSteps(runId: number): Promise<string[]> {
     const response = await octokit.rest.actions.listJobsForWorkflowRun({
       owner: config.owner,
       repo: config.repo,
-      run_id: runId
+      run_id: runId,
     });
 
     if (response.status !== 200) {
